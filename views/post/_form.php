@@ -64,6 +64,11 @@ $time_date_begin = true;
                                 <? endif ?>
 
                                 <? $time_date_begin = !$time_date_begin ?>
+                            <? elseif (strpos($attribute, 'email')): ?>
+                                <?= $form->field($modelForm, $attribute)->input('email', [
+                                    'class' => 'form-control '.$modelForm->form_class_id,
+                                    'disabled' => $modelForm->form_name == $forms[0] ? false : true,
+                                ]) ?>
                             <? else: ?>
                                 <?= $form->field($modelForm, $attribute)->textInput([
                                     'class' => 'form-control '.$modelForm->form_class_id,

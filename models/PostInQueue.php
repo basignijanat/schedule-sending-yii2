@@ -70,6 +70,7 @@ class PostInQueue extends \yii\db\ActiveRecord
                 $modelPost = Post::find()->where(['id' => $this->post_id])->one();
                 $modelForm = $modelPost->getForm();
                 $this->notification_email_at = time();
+                $this->save();
 
                 return Yii::$app->mailer->compose()
                     ->setFrom('from@domain.com')

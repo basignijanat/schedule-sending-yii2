@@ -31,7 +31,8 @@ class ContactPost extends \yii\db\ActiveRecord
         return [
             [['post_id', 'contact_name', 'contact_email'], 'required'],
             [['post_id'], 'integer'],
-            [['contact_name', 'contact_email'], 'string', 'max' => 255],
+            [['contact_name'], 'string', 'max' => 255],
+            [['contact_email'], 'email'],
         ];
     }
 
