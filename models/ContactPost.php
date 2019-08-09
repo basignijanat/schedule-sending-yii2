@@ -46,4 +46,14 @@ class ContactPost extends \yii\db\ActiveRecord
             'contact_email' => Yii::t('app\model', 'Contact Email'),
         ];
     }
+
+    public function setPostId($post_id){
+
+        return $this->post_id = $post_id;
+    }
+
+    public function getClassName(){
+
+        return end(explode('\\', get_class($this)));
+    }
 }

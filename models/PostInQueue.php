@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Post;
 
 /**
  * This is the model class for table "post_in_queue".
@@ -30,9 +31,8 @@ class PostInQueue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_id', 'place_at', 'place_at_time', 'place_at_date'], 'required'],
-            [['post_id', 'notification_email_at'], 'integer'],            
-            [['place_at'], 'integer'],            
+            [['post_id', 'place_at'], 'required'],
+            [['post_id', 'notification_email_at', 'place_at'], 'integer'],                         
             [['place_at_time', 'place_at_date'], 'string'],
         ];
     }
@@ -55,11 +55,34 @@ class PostInQueue extends \yii\db\ActiveRecord
     }
 
     public function beforeValidate(){
-        $this->place_at = strtotime($this->place_at_time.' '.$this->place_at_date);
+        $this->place_at = strtotime($this->place_at_time.' '.$this->place_at_date);        
+
         if ($this->place_at < time()){
             $this->place_at = time();
         }
 
         return parent::beforeValidate();
+    }
+
+    public function sendPost(){
+        if ($this->notification_email_at == 0){
+            if ($this->place_at >= time()){
+                $modelPost = Post::find()->where(['id' => $this->post_id])->one();
+                $modelForm = $modelPost->getForm();
+                $this->notification_email_at = time();
+
+                return Yii::$app->mailer->compose()
+                    ->setFrom('from@domain.com')
+                    ->setTo('to@domain.com')
+                    ->setSubject('Message Topic')
+                    ->setTextBody(implode(',', $modelForm->getAttributes()))                    
+                    ->send();
+            }
+            else{
+
+            }
+            
+        }
+        
     }
 }

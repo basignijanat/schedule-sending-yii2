@@ -63,6 +63,11 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?php if(Yii::$app->session->hasFlash('success')):?>
+            <div class="info">
+                Success!
+            </div>
+        <?php endif ?>
         <?= $content ?>
     </div>
 </div>
