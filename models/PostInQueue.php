@@ -61,6 +61,10 @@ class PostInQueue extends \yii\db\ActiveRecord
             $this->place_at = time();
         }
 
+        if (!isset($this->notification_email_at)){
+            $this->notification_email_at = 0;
+        }
+
         return parent::beforeValidate();
     }
 

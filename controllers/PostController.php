@@ -82,7 +82,7 @@ class PostController extends Controller
             }
             else{
                 $result['piq'] = 0;
-            }             
+            }                        
             if ($modelsForm[$modelPost->type]->load(Yii::$app->request->post()) && $modelsForm[$modelPost->type]->save()){                    
                 $result['form'] = 1;
             }            
@@ -98,7 +98,7 @@ class PostController extends Controller
                 $modelsForm = Post::getForms();  
 
                 $form_status = 1;                
-            }
+            }            
         }                  
 
         return $this->render('create', [
